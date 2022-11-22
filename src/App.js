@@ -5,6 +5,7 @@ import "./App.css";
 import { HomePage } from "./components/Home.page";
 import { RQSuperHeroesPage } from "./components/RQSuperHeroes.page";
 import { SuperHeroesPage } from "./components/SuperHeroes.page";
+import { HomeworkPage } from "./components/Homework.page";
 
 const queryClinet = new QueryClient();
 
@@ -24,6 +25,9 @@ function App() {
               <li>
                 <Link to="/rq-super-heroes">RQ Super Heroes</Link>
               </li>
+              <li>
+                <Link to="/homework">Homework</Link>
+              </li>
             </ul>
           </nav>
           <Switch>
@@ -32,6 +36,9 @@ function App() {
             </Route>
             <Route path="/rq-super-heroes">
               <RQSuperHeroesPage />
+            </Route>
+            <Route path="/homework">
+              <HomeworkPage />
             </Route>
             <Route path="/">
               <HomePage />
