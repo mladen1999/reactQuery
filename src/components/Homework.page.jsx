@@ -9,7 +9,7 @@ export const HomeworkPage = () => {
   };
 
   const { isLoading, data, isError, error, refetch, isFetching } =
-    useSuperHeroesData(onSuccess, onError);
+    useSuperHeroesData("super-heroess", onSuccess, onError, false);
 
   const handleClick = () => {
     refetch();
