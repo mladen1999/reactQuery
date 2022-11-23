@@ -24,14 +24,40 @@ export const useSuperHeroesData = (name, onSuccess, onError, enabled) => {
 export const useAddSuperHeroData = () => {
   const queryClinet = useQueryClient();
   return useMutation(addSuperHero, {
-    onSuccess: (data) => {
-      /* queryClinet.invalidateQueries("super-heroes"); */
+    /* onSuccess: (data) => {
+       queryClinet.invalidateQueries("super-heroes"); */
+    /*
       queryClinet.setQueryData("super-heroes", (oldQueryData) => {
         return {
           ...oldQueryData,
           data: [...oldQueryData.data, data.data],
         };
       });
+    }, */
+    onMutate: async (newHero) => {
+      await queryClinet.cancelQueries("super-heroes");
+      const previusHeroData = queryClinet.getQueryData("super-heroes");
+      queryClinet.setQueryData("super-heroes", (oldQueryData) => {
+        return {
+          ...oldQueryData,
+          data: [
+            ...oldQueryData.data,
+            {
+              id: oldQueryData?.data?.length + 1,
+              ...newHero,
+            },
+          ],
+        };
+      });
+      return {
+        previusHeroData,
+      };
+    },
+    onError: (_error, _hero, context) => {
+      queryClinet.setQueryData("super-heroes", context.previusHeroData);
+    },
+    onSettled: () => {
+      queryClinet.invalidateQueries("super-heroes");
     },
   });
 };

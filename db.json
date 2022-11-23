@@ -19,6 +19,11 @@
       "name": "Mladen",
       "alterEgo": "Cvetkovic",
       "id": 4
+    },
+    {
+      "name": "Cvetkovic",
+      "alterEgo": "Mladen",
+      "id": 5
     }
   ],
   "friends": [
@@ -44,7 +49,11 @@
   "channels": [
     {
       "id": "codevolution",
-      "courses": ["react", "vue", "angular"]
+      "courses": [
+        "react",
+        "vue",
+        "angular"
+      ]
     }
   ],
   "colors": [
