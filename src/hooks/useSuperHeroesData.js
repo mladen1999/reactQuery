@@ -24,8 +24,14 @@ export const useSuperHeroesData = (name, onSuccess, onError, enabled) => {
 export const useAddSuperHeroData = () => {
   const queryClinet = useQueryClient();
   return useMutation(addSuperHero, {
-    onSuccess: () => {
-      queryClinet.invalidateQueries("super-heroes");
+    onSuccess: (data) => {
+      /* queryClinet.invalidateQueries("super-heroes"); */
+      queryClinet.setQueryData("super-heroes", (oldQueryData) => {
+        return {
+          ...oldQueryData,
+          data: [...oldQueryData.data, data.data],
+        };
+      });
     },
   });
 };
