@@ -1,7 +1,14 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSuperHeroesData } from "../hooks/useSuperHeroesData";
+import {
+  useAddSuperHeroData,
+  useSuperHeroesData,
+} from "../hooks/useSuperHeroesData";
 
 export const RQSuperHeroesPage = () => {
+  const [name, setName] = useState("");
+  const [alterEgo, setAlterEgo] = useState("");
+
   const onSuccess = (data) => {
     console.log("Perform side effect after data fetching | ", data);
   };
@@ -12,6 +19,14 @@ export const RQSuperHeroesPage = () => {
 
   const { isLoading, data, isError, error, isFetching, refetch } =
     useSuperHeroesData("super-heroes", onSuccess, onError, true);
+
+  const {
+    mutate: addHero,
+    isLoading: isLoadingHeroes,
+    isError: isErrorHeroes,
+    error: errorHeroes,
+    isFetching: isFetchingHeroes,
+  } = useAddSuperHeroData();
   /*
     {
       
@@ -29,6 +44,12 @@ export const RQSuperHeroesPage = () => {
 
   //console.log({ isLoading, isFetching });
 
+  const handleAddHeroClick = () => {
+    console.log({ name, alterEgo });
+    const hero = { name, alterEgo };
+    addHero(hero);
+  };
+
   if (isLoading || isFetching) {
     return <div>Loading...</div>;
   }
@@ -37,10 +58,33 @@ export const RQSuperHeroesPage = () => {
     return <h2>{error.message}</h2>;
   }
 
+  if (isLoadingHeroes || isFetchingHeroes) {
+    return <div>Loading...</div>;
+  }
+
+  if (isErrorHeroes) {
+    return <h2>{errorHeroes.message}</h2>;
+  }
+
   return (
     <>
       <h2>RQSuperHeroesPage</h2>
-      {/* <button onClick={refetch}>Fetch Heroes</button> */}
+
+      <div>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="text"
+          value={alterEgo}
+          onChange={(e) => setAlterEgo(e.target.value)}
+        />
+        <button onClick={handleAddHeroClick}>Add Hero</button>
+      </div>
+
+      {<button onClick={refetch}>Fetch Heroes</button>}
       {data?.data.map((hero) => {
         return (
           <div key={hero.id}>
