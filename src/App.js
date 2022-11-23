@@ -5,7 +5,9 @@ import "./App.css";
 import { HomePage } from "./components/Home.page";
 import { RQSuperHeroesPage } from "./components/RQSuperHeroes.page";
 import { SuperHeroesPage } from "./components/SuperHeroes.page";
-import { HomeworkPage } from "./components/Homework.page";
+/* import { HomeworkPage } from "./components/Homework.page"; */
+import { RQSuperHeroPage } from "./components/RQSuperHero.page";
+import { ParallelQueriesPage } from "./components/ParallelQueries.page";
 
 const queryClinet = new QueryClient();
 
@@ -25,21 +27,27 @@ function App() {
               <li>
                 <Link to="/rq-super-heroes">RQ Super Heroes</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/homework">Homework</Link>
-              </li>
+              </li> */}
             </ul>
           </nav>
           <Switch>
+            <Route path="/rq-parallel">
+              <ParallelQueriesPage />
+            </Route>
+            <Route path="/rq-super-heroes/:heroId">
+              <RQSuperHeroPage />
+            </Route>
             <Route path="/super-heroes">
               <SuperHeroesPage />
             </Route>
             <Route path="/rq-super-heroes">
               <RQSuperHeroesPage />
             </Route>
-            <Route path="/homework">
+            {/* <Route path="/homework">
               <HomeworkPage />
-            </Route>
+            </Route> */}
             <Route path="/">
               <HomePage />
             </Route>
